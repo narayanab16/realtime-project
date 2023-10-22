@@ -1,0 +1,15 @@
+debug: false
+spring:
+  application:
+    name: "BankApplication"
+server:
+  servlet:
+    context-path: /bank-app
+  port: 10000
+---
+app:
+  database:
+    h2:
+      url: "r2dbc:h2:tcp://localhost:8888/bankdb"
+      username: sa
+      password: welcome1
