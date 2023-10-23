@@ -76,13 +76,13 @@ public class BankWebClient {
         System.out.println("Got customerMono : " + customerMono.block());
     }
 
-    private static void createaAccount(BankWebClient client) {
+    private static String createaAccount(BankWebClient client) {
         // Create a Customer and then create account
-        BankBranch b1 = new BankBranch("BR0001", "SVG Bank", "Nagari", "Andhra Pradesh", "India");
+        BankBranch b1 = new BankBranch("BR0002", "SVG Bank", "Nagalapuram", "Andhra Pradesh", "India");
         Customer c1 = new Customer(null, "Narayana", "", "Basetty", "Bengaluru", "1234567892", "IT-Software", LocalDate.now());
         Account account = new Account();
         account.setCustomer(c1);
-        account.setBankBranches(Arrays.asList(b1));
+        account.setBankBranch(b1);
         account.setAccountStatus(AccountStatusType.ACTIVE.name());
         account.setAccountType(AccountType.SAVINGS.name());
         account.setOpeningBalance(501.70);
@@ -91,18 +91,19 @@ public class BankWebClient {
         Account _resAccount = resAccount.block();
         System.out.println(" Account Created " + _resAccount);
         System.out.println(" Account ID : " + _resAccount.getId());
+        return _resAccount.getId();
     }
 
-    private static void createaAccountTrxn(BankWebClient client) {
+    private static void createaAccountTrxn(BankWebClient client, String accountId) {
         // Create a Customer and then create account
         AccountTransaction accountTrxn = new AccountTransaction();
-        accountTrxn.setAccountId("94931627");
+        accountTrxn.setAccountId(accountId);
         accountTrxn.setModeOfTransaction(TransactionModeType.CASH.name());
         accountTrxn.setTransactionType(AccountTransactionType.WITHDRAWAL.name());
         accountTrxn.setTransactionAmount(20.50);
         Mono<AccountTransaction> resAccountTrxn = client.createAccountTrxn(accountTrxn);
         AccountTransaction at = resAccountTrxn.block();
-        System.out.println(" Account Created " + at);
+        System.out.println(" AccountTransaction Created " + at);
         System.out.println(" AccountTransaction ID " + at.getId());
     }
 
@@ -113,9 +114,9 @@ public class BankWebClient {
         // App flows
 
         // 1st call - create a customer and add new account number, note it for transaction
-        // createaAccount(client);
+        String accountId = createaAccount(client);
         // 2nd call - update account id/number then call for trxn details
-        createaAccountTrxn(client);
+        createaAccountTrxn(client, accountId);
         // Independent way works
         //createaBranch(client);
         //createaCustomer(client);

@@ -26,7 +26,7 @@ public class AccountTransactionRoute {
 
     @Bean
     public RouterFunction<ServerResponse> createAccountTrxn(AccountTransactionHandler accountTrxnHandler) {
-        LOG.info("createAccount");
+        LOG.info("createAccountTrxn");
         return RouterFunctions.route(
                 POST("/createAccountTrxn").and(accept(MediaType.APPLICATION_JSON)), accountTrxnHandler::createAccountTrxn
         );

@@ -17,7 +17,7 @@ public class CustomerRoute {
     private static Logger LOG = LoggerFactory.getLogger(CustomerRoute.class);
     @Bean
     public RouterFunction<ServerResponse> getCustomer(CustomerHandler customerHandler) {
-        LOG.info("getCustomer By id: ");
+        LOG.info("getCustomerById: ");
         return RouterFunctions.route(
                 GET("/getCustomerById/{id}").and(accept(MediaType.APPLICATION_JSON)), customerHandler::getCustomer
         );

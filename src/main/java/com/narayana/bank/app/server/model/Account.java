@@ -4,14 +4,10 @@ package com.narayana.bank.app.server.model;
 import com.narayana.bank.app.server.common.model.BaseEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-import reactor.core.publisher.Flux;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Table(name = "account")
 public class Account extends BaseEntity {
@@ -22,7 +18,7 @@ public class Account extends BaseEntity {
     @Transient
     Customer customer;
     @Transient
-    List<BankBranch> bankBranches;
+    BankBranch bankBranch;
     @Column(value = "opening_balance")
     Double openingBalance;
     @Column(value = "account_open_date")
@@ -74,12 +70,12 @@ public class Account extends BaseEntity {
         this.customer = customer;
     }
 
-    public List<BankBranch> getBankBranches() {
-        return bankBranches;
+    public BankBranch getBankBranch() {
+        return bankBranch;
     }
 
-    public void setBankBranches(List<BankBranch> bankBranches) {
-        this.bankBranches = bankBranches;
+    public void setBankBranch(BankBranch bankBranch) {
+        this.bankBranch = bankBranch;
     }
 
     public Double getOpeningBalance() {

@@ -25,6 +25,7 @@ public class BankBranchRoute {
 
     @Bean
     public RouterFunction<ServerResponse> createBranch(BankBranchHandler bankBranchHandler) {
+        LOG.info("createBranch");
         return RouterFunctions.route(
                 POST("/createBranch").and(accept(MediaType.APPLICATION_JSON)), bankBranchHandler::createBranch
         );
@@ -32,6 +33,7 @@ public class BankBranchRoute {
 
     @Bean
     public RouterFunction<ServerResponse> getAllBranches(BankBranchHandler bankBranchHandler) {
+        LOG.info("getAllBranches");
         return RouterFunctions.route(
                 GET("/getAllBranches").and(accept(MediaType.APPLICATION_JSON)), bankBranchHandler::getAllBranches
         );

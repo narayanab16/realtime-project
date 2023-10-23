@@ -51,21 +51,22 @@ public class AccountService {
                 account.setCustomer(inCustomer);
                 account.setId(BankappHelper.getAccountNumber());
                 account.setCustomerId(cust_id);
-                account.setBranchId(account.getBankBranches().get(0).getId());
+                account.setBranchId(account.getBankBranch().getId());
                 account.setNewAccount();
                 // 1st save customer and then subsequently save account
                 accountAdded = customerRepository.save(inCustomer)
                         .flatMap(x -> accountRepository.save(account).then(Mono.just(account)));
             } else {
-                // Customer Already Exists - update other
-                // Add new accounts, branches
+                // Customer Already Exists, existing branches
+                // Add new accounts
                 account.setCustomer(oldCust);
                 account.setId(BankappHelper.getAccountNumber());
+                account.setCustomerId(oldCust.getId());
+                account.setBranchId(account.getBankBranch().getId());
                 account.setNewAccount();
                 accountAdded = accountRepository.save(account);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new BankappBusinessException(e.getMessage());
         }
         if(Objects.isNull(accountAdded))
