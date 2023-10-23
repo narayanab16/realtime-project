@@ -96,7 +96,7 @@ public class BankWebClient {
     private static void createaAccountTrxn(BankWebClient client) {
         // Create a Customer and then create account
         AccountTransaction accountTrxn = new AccountTransaction();
-        accountTrxn.setAccountId("73785695");
+        accountTrxn.setAccountId("94931627");
         accountTrxn.setModeOfTransaction(TransactionModeType.CASH.name());
         accountTrxn.setTransactionType(AccountTransactionType.WITHDRAWAL.name());
         accountTrxn.setTransactionAmount(20.50);
@@ -111,8 +111,12 @@ public class BankWebClient {
                 WebClient.builder().baseUrl("http://localhost:10000/bank-app").build();
         BankWebClient client = new BankWebClient(webClient);
         // App flows
-        //createaAccount(client);
+
+        // 1st call - create a customer and add new account number, note it for transaction
+        // createaAccount(client);
+        // 2nd call - update account id/number then call for trxn details
         createaAccountTrxn(client);
+        // Independent way works
         //createaBranch(client);
         //createaCustomer(client);
     }
