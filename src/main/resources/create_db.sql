@@ -24,8 +24,9 @@ CREATE TABLE if not exists account
       account_id VARCHAR(11),
       customer_id VARCHAR(11),
       branch_id VARCHAR(10),
-      opening_balance DECIMAL,
+      opening_balance DOUBLE,
       account_open_date TIMESTAMP,
+      account_update_date TIMESTAMP,
       account_type VARCHAR(10),
       account_status VARCHAR(10),
       CONSTRAINT account_id_pk PRIMARY KEY(account_id),
@@ -34,12 +35,12 @@ CREATE TABLE if not exists account
     );
 CREATE TABLE if not exists account_transaction
     (
-     trxn_number VARCHAR(10),
+     trxn_number VARCHAR(15),
      account_id VARCHAR(11),
-     date_of_trxn DATE,
+     date_of_trxn TIMESTAMP,
      mode_of_transaction VARCHAR(20),
      transaction_type VARCHAR(20),
-     transaction_amount DECIMAL,
+     transaction_amount DOUBLE,
      CONSTRAINT trxn_number_pk PRIMARY KEY(trxn_number),
      CONSTRAINT trxn_account_id_fk FOREIGN KEY(account_id) REFERENCES account(account_id)
     );

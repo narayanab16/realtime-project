@@ -20,5 +20,9 @@ Enforced Spring Transaction Manager for Concurrency Control
   - Get all customers: http://localhost:10000/bank-app/getAllAccounts
   - Get customer by id: http://localhost:10000/bank-app/getCustomerById/{id}
   - create a customer via POST data: http://localhost:10000/bank-app/registerCustomer
+- # Account Transaction Rest API
+  - Get all account trxns: http://localhost:10000/bank-app/getAllAccountTrxns
+  - Get account trxn by id: http://localhost:10000/bank-app/getAccountTrxnById/{id}
+  - create a account trxn, using account via POST data: http://localhost:10000/bank-app/createAccountTrxn
 - # Database Design Model
 ![img.png](img.png)

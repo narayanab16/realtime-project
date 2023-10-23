@@ -27,6 +27,8 @@ public class Account extends BaseEntity {
     Double openingBalance;
     @Column(value = "account_open_date")
     LocalDateTime accountOpenDate;
+    @Column(value = "account_update_date")
+    LocalDateTime accountUpdateDate;
     @Column(value = "account_type")
     String accountType;
     @Column(value = "account_status")
@@ -94,6 +96,14 @@ public class Account extends BaseEntity {
 
     public void setAccountOpenDate(LocalDateTime accountOpenDate) {
         this.accountOpenDate = accountOpenDate;
+    }
+
+    public LocalDateTime getAccountUpdateDate() {
+        return accountUpdateDate;
+    }
+
+    public void setAccountUpdateDate(LocalDateTime accountUpdateDate) {
+        this.accountUpdateDate = accountUpdateDate;
     }
 
     public String getAccountType() {
