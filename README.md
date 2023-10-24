@@ -4,7 +4,7 @@ Enforced Spring Transaction Manager for Concurrency Control
 
 -  Prereq: Java 18 or higher, IntelliJ/Eclipse
 -  Please create a dir in your C/D/E drive (D:/test/bank-db) or your /path/to/folder
--  Update path in dbserver/RunDBServer.java, uses H2 in server mode
+-  Update path in dbserver/RunDBServer.java, uses H2 in server mode, start java DB server
 -  DB access url: http://localhost:8082
 -  BankApplication.java start the server app
 -  Base URL: http://localhost:10000/bank-app
