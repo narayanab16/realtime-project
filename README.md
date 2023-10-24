@@ -7,6 +7,7 @@ Enforced Spring Transaction Manager for Concurrency Control
 -  Update path in dbserver/RunDBServer.java, uses H2 in server mode, start java DB server
 -  DB access url: http://localhost:8082
 -  BankApplication.java start the server app
+-  Java client to test: client/BankWebClient.java
 -  Base URL: http://localhost:10000/bank-app
 - # Bank Branch Rest API
   - Get all branches: http://localhost:10000/bank-app/getAllBranches
