@@ -6,7 +6,7 @@ public class BankappHelper {
     private static final long SEED = System.currentTimeMillis();
 
     private static String getRandomNumber() {
-        int number = new Random(SEED).nextInt(99999999);
+        int number = new Random(SEED).nextInt(99999999) + new Random().nextInt(3);
         return String.format("%08d", Math.abs(number));
     }
 
