@@ -65,15 +65,15 @@ public class BankWebClient {
 
 
     private static void createaBranch(BankWebClient client) {
-        BankBranch b1 = new BankBranch("BR0004", "SVG Bank", "Chitoor", "Andhra Pradesh", "India");
+        BankBranch b1 = new BankBranch("BR0004", "SVG Bank", "Chittoor", "Andhra Pradesh", "India");
         Mono<BankBranch> branch = client.createBranch(b1);
-        System.out.println("Got branch 1 : " + branch.block());
+        System.out.println("New branch added to the Database table : " + branch.block());
     }
 
     private static void createaCustomer(BankWebClient client) {
         Customer customer = new Customer(null, "Narayana", "", "Basetty", "Bengaluru", "1234567892", "IT-Software", LocalDate.now());
         Mono<Customer> customerMono = client.registerCustomer(customer);
-        System.out.println("Got customerMono : " + customerMono.block());
+        System.out.println("Got customer Id : " + customerMono.block().getId());
     }
 
     private static String createaAccount(BankWebClient client) {
@@ -89,7 +89,24 @@ public class BankWebClient {
         account.setAccountOpenDate(LocalDateTime.now());
         Mono<Account> resAccount = client.createAccount(account);
         Account _resAccount = resAccount.block();
-        System.out.println(" Account Created " + _resAccount);
+        System.out.println(" Account Created : " + _resAccount);
+        System.out.println(" Account ID : " + _resAccount.getId());
+        return _resAccount.getId();
+    }
+    private static String createaAccount2(BankWebClient client) {
+        // Create a Customer and then create account
+        BankBranch b1 = new BankBranch("BR0001", "SVG Bank", "Nagari", "Andhra Pradesh", "India");
+        Customer c1 = new Customer(null, "Narayana", "", "Basetty", "Bengaluru", "1234567892", "IT-Software", LocalDate.now());
+        Account account = new Account();
+        account.setCustomer(c1);
+        account.setBankBranch(b1);
+        account.setAccountStatus(AccountStatusType.ACTIVE.name());
+        account.setAccountType(AccountType.SAVINGS.name());
+        account.setOpeningBalance(700.00);
+        account.setAccountOpenDate(LocalDateTime.now());
+        Mono<Account> resAccount = client.createAccount(account);
+        Account _resAccount = resAccount.block();
+        System.out.println(" Account Created : " + _resAccount);
         System.out.println(" Account ID : " + _resAccount.getId());
         return _resAccount.getId();
     }
@@ -103,8 +120,8 @@ public class BankWebClient {
         accountTrxn.setTransactionAmount(20.50);
         Mono<AccountTransaction> resAccountTrxn = client.createAccountTrxn(accountTrxn);
         AccountTransaction at = resAccountTrxn.block();
-        System.out.println(" AccountTransaction Created " + at);
-        System.out.println(" AccountTransaction ID " + at.getId());
+        System.out.println(" AccountTransaction Created : " + at);
+        System.out.println(" AccountTransaction ID : " + at.getId());
     }
 
     public static void main(String[] args) {
@@ -112,12 +129,12 @@ public class BankWebClient {
                 WebClient.builder().baseUrl("http://localhost:10000/bank-app").build();
         BankWebClient client = new BankWebClient(webClient);
         // App flows
-
         // 1st call - create a customer and add new account number, note it for transaction
         String accountId = createaAccount(client);
+        String accountId2 = createaAccount2(client);
         // 2nd call - update account id/number then call for trxn details
-        createaAccountTrxn(client, accountId);
-        // Independent way works
+        //createaAccountTrxn(client, accountId);
+        // Independent way works to create branch and customer data
         //createaBranch(client);
         //createaCustomer(client);
     }

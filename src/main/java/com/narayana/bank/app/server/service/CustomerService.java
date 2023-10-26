@@ -34,22 +34,24 @@ public class CustomerService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
     public Mono<Customer> registerCustomer(Customer customer) throws BankappBusinessException {
         LOG.info("registerCustomer ");
-        Mono<Customer> customerAdded = null;
+        Mono<Customer> resCustomer = null;
         try {
-            Mono<Customer> customer1 = customerRepository.findByFirstNameAndLastNameAndDateOfBirth(customer.getFirstName(), customer.getLastName(), customer.getDateOfBirth());
-            Customer cust = customer1.block();
-            if(Objects.isNull(cust)) {
+            Mono<Customer> customerMono = customerRepository.findByFirstNameAndLastNameAndDateOfBirth(customer.getFirstName(), customer.getLastName(), customer.getDateOfBirth());
+            Customer custOld = customerMono.block();
+            if(Objects.isNull(custOld)) {
                 LOG.info("registerCustomer - new customer");
                 customer.setNewCustomer();
                 customer.setId(BankappHelper.getCustomerId());
-                customerAdded = customerRepository.save(customer);
+                resCustomer = customerRepository.save(customer);
             } else {
-                throw new BankappBusinessException("Customer Already Exists");
+                // Customer already exists and return customer id
+                LOG.info("Customer already exists and return customer id");
+                resCustomer = customerMono;
             }
         } catch (Exception e) {
             throw new BankappBusinessException(e.getMessage());
         }
-        return customerAdded;
+        return resCustomer;
     }
 
     public Flux<Customer> getAllCustomers() throws BankappBusinessException {
